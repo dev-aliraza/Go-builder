@@ -35,7 +35,21 @@ Simply execute script go-builder.py with python 2.7 or python 3. Following are t
     * -x, --exec      =>  Valid `GO` executable path if you don't have it configured on OS level 
                           and want to set it in script explicitly Default executable is `go` 
                           and will be used like this is build command: `go build xxx`
-                          
+
+## Operating System and Architecture Support ##
+| Operating Systems  | Architectures |
+| ------------- | ------------- |
+| windows  | ["386", "amd64"]  |
+| linux  | ["386", "amd64", "arm", "arm64", "ppc64", "ppc64le", "mips" , "mipsle", "mips64", "mips64le"]  |
+| android  | ["arm"]  |
+| dragonfly  | ["amd64"]  |
+| darwin  | ["386", "amd64", "arm", "arm64"]  |
+| freebsd  | ["386", "amd64", "arm"]  |
+| netbsd  | ["386", "amd64", "arm"]  |
+| openbsd  | ["386", "amd64", "arm"]  |
+| plan9  | ["386", "amd64"]  |
+| solaris  | ["amd64"]  |
+
  ## Contribution ##
  You can add any exciting feature you like and contribute in this small tool. if you found any bug, you can open issue or give pull request *(with fix obviously)* 
  
