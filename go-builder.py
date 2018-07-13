@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import requests, sys, getopt, os
+import sys, getopt, os
 
 ALL_OS = ["windows", "solaris", "plan9", "openbsd", "netbsd", "linux", "freebsd", "dragonfly", "darwin", "android"]
 ALL_OS_ARCH = {
