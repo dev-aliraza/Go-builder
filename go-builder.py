@@ -32,25 +32,28 @@ def create_builds_array(builds):
 		builds_array = builds.split(":")
 		for build in builds_array:
 			os_arch = build.split("/")
+
+			if os_arch[1] == "*":
+				builds_dict[os_arch[0]] = ["*"]
+
 			if os_arch[0] in builds_dict:
-				builds_dict[os_arch[0]].append(os_arch[1])
+				if builds_dict[os_arch[0]][0] != "*":
+					builds_dict[os_arch[0]].append(os_arch[1])
 			else:
 				builds_dict[os_arch[0]] = [os_arch[1]]
+
 	return builds_dict
 
 def final_output_dest(output, os_type, arch):
-	return_value = ""
-	if output:
-		return_value = output
-	else:
-		return_value = "final_build"
-
-	return_value = return_value + "_" + os_type + "_" + arch
-
+	return_value = output + ("final_build", "")[(output and output[-1:] != '/')] + "_" + os_type + "_" + arch
 	if os_type == "windows":
 		return_value = return_value + ".exe"
-
 	return return_value
+
+def run_command(cmd_dest, os_type, arch, executable, cmd_output):
+	os.environ["GOOS"] = os_type
+	os.environ["GOARCH"] = arch
+	os.system(cmd_dest + " && "+executable+" build -o " + cmd_output)
 
 def builder(dest, builds, gopath, output, goroot, executable):
 	cmd_dest = "cd " + dest
@@ -65,10 +68,13 @@ def builder(dest, builds, gopath, output, goroot, executable):
 
 	for os_type, archs in builds_array.items():
 		for arch in archs:
-			cmd_output = final_output_dest(output, os_type, arch)
-			os.environ["GOOS"] = os_type
-			os.environ["GOARCH"] = arch
-			os.system(cmd_dest + " && "+executable+" build -o " + cmd_output)
+			if arch == "*":
+				for os_arch in ALL_OS_ARCH[os_type]:
+					cmd_output = final_output_dest(output, os_type, os_arch)
+					run_command(cmd_dest, os_type, os_arch, executable, cmd_output)
+			else:
+				cmd_output = final_output_dest(output, os_type, arch)
+				run_command(cmd_dest, os_type, arch, executable, cmd_output)
 
 	render("Builds generated successfully", True, True)
 
@@ -87,7 +93,7 @@ def validate(dest, builds, gopath, goroot, executable):
 				exit = render("OS `"+os_type+"` not exist", True, False, True)
 
 			for arch in archs:
-				if os_type in ALL_OS_ARCH and not arch in ALL_OS_ARCH[os_type]:
+				if os_type in ALL_OS_ARCH and not arch in ALL_OS_ARCH[os_type] and arch != "*":
 					exit = render("Architecture `"+arch+"` for OS `"+os_type+"` not exist", True, False, True)
 	else:
 		exit = render("There are no builds exist", True, False, True)
