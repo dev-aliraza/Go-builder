@@ -21,7 +21,8 @@ Simply execute script go-builder.py with python 2.7 or python 3. Following are t
                           OS and Architecture in the list will be seperated by forward-slash (/)
                           _Example_: windows/386:linux/amd64 -- Here list is seprated by Colon (:)
                           means 2 elemets in list and elements have operating system and architecture
-                          seprated by forward slash (/)
+                          seprated by forward slash (/). You can also add all architectures of specific
+                          OS by `*`. _Example_: windows/*:linux/*
     
     * -o, -output     =>  Path where you need output builds (`sudo` rights needed to create directory 
                                                             and build file in restricted folders)
@@ -49,6 +50,11 @@ Simply execute script go-builder.py with python 2.7 or python 3. Following are t
 | openbsd  | ["386", "amd64", "arm"]  |
 | plan9  | ["386", "amd64"]  |
 | solaris  | ["amd64"]  |
+
+## Features ##
+* Create compile GOLang programs for multiple OS(s)
+* Add GOPATH and GOROOT explicitly in script execution 
+* Add all architectures of specific OS(s). Example: windows/\*:linux/\*
 
  ## Contribution ##
  You can add any exciting feature you like and contribute in this small tool. if you found any bug, you can open issue or give pull request *(with fix obviously)* 
