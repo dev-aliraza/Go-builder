@@ -56,6 +56,9 @@ Simply execute script go-builder.py with python 2.7 or python 3. Following are t
 * Add GOPATH and GOROOT explicitly in script execution 
 * Add all architectures of specific OS(s). Example: windows/\*:linux/\*
 
+## Testing ##
+This program was only tested on `LINUX-UBUNTU`
+
  ## Contribution ##
  You can add any exciting feature you like and contribute in this small tool. if you found any bug, you can open issue or give pull request *(with fix obviously)* 
  
